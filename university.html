@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>3D Solar System Viewer</title>
+<link rel="stylesheet" href="styless.css">
+</head>
+<body>
+
+<div id="navbar">
+  <button id="generalView">General View</button>
+  <button id="orbit">🔁 Start Orbit</button>
+  <button id="toggleSound">🔊 Sound On/Off</button>
+  <button id="regresar"><a href="index.html">Back menu</a></button>
+</div>
+
+<div id="iframe-container">
+  <iframe id="api-frame" allow="autoplay; fullscreen; xr-spatial-tracking"
+    mozallowfullscreen="true" webkitallowfullscreen="true" allowfullscreen></iframe>
+</div>
+
+<div id="message"></div>
+<audio id="spaceSound" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" loop></audio>
+
+<script src="https://static.sketchfab.com/api/sketchfab-viewer-1.12.1.js"></script>
+<script>
+const iframe = document.getElementById('api-frame');
+const client = new Sketchfab('1.12.1', iframe);
+const uid = '827986d80bef4f409340737f68e8b34a';
+
+let apiGlobal = null;
+let orbiting = false;
+let orbitAngle = 0;
+let inGeneralView = true;
+let soundOn = false;
+
+const spaceSound = document.getElementById('spaceSound');
+
+function showMessage(text){
+  const msg = document.getElementById('message');
+  msg.textContent = text;
+  msg.style.opacity = 1;
+  setTimeout(()=>msg.style.opacity=0,2500);
+}
+
+// Initialize Sketchfab viewer
+client.init(uid,{
+  success:function(api){
+    apiGlobal = api;
+    api.start();
+    api.addEventListener('viewerready',()=>{
+      console.log('✅ Viewer ready');
+      // Cinematic initial transition from far away
+      let steps = 120;
+      let step = 0;
+      const startPos = [500,300,500];
+      const targetPos = [250,150,250];
+      const targetLook = [0,0,0];
+      const anim = setInterval(()=>{
+        step++;
+        const t = step/steps;
+        const smooth = t*t*(3-2*t);
+        const currentPos = startPos.map((v,i)=>v+(targetPos[i]-v)*smooth);
+        apiGlobal.setCameraLookAt(currentPos,targetLook,0);
+        if(step>=steps){
+          clearInterval(anim);
+          showMessage('Welcome to the Solar System');
+          apiGlobal.setCameraLookAt(targetPos,targetLook,0);
+          spaceSound.play();
+          soundOn=true;
+        }
+      },16);
+    });
+  },
+  error:function(){ console.error('Error initializing Sketchfab'); }
+});
+
+// Buttons
+document.getElementById('generalView').addEventListener('click',()=>{
+  if(!apiGlobal) return;
+  apiGlobal.setCameraLookAt([250,150,250],[0,0,0],3);
+  inGeneralView=true;
+  showMessage('General Solar System View');
+  if(!soundOn){spaceSound.play(); soundOn=true;}
+});
+
+document.getElementById('orbit').addEventListener('click',()=>{
+  orbiting=!orbiting;
+  document.getElementById('orbit').textContent = orbiting ? '⏸️ Stop Orbit' : '🔁 Start Orbit';
+  showMessage(orbiting?'Orbit started':'Orbit stopped');
+});
+
+document.getElementById('toggleSound').addEventListener('click',()=>{
+  if(soundOn){spaceSound.pause(); soundOn=false; showMessage('Sound Off');}
+  else{spaceSound.play(); soundOn=true; showMessage('Sound On');}
+});
+
+// Animate orbit
+function animateOrbit(){
+  if(orbiting && apiGlobal){
+    orbitAngle+=0.002;
+    const radius = inGeneralView?250:150;
+    const y = inGeneralView?150:50;
+    const x=Math.cos(orbitAngle)*radius;
+    const z=Math.sin(orbitAngle)*radius;
+    apiGlobal.setCameraLookAt([x,y,z],[0,0,0],0);
+  }
+  requestAnimationFrame(animateOrbit);
+}
+animateOrbit();
+</script>
+
+</body>
+</html>

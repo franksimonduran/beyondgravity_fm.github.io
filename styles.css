@@ -1,0 +1,260 @@
+/* === FUENTES Y RESET === */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Poppins", sans-serif;
+  background-color: #0d1117;
+  color: #fff;
+  overflow-x: hidden;
+}
+
+/* === NAVBAR === */
+.navbar {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background: rgba(13, 17, 23, 0.95);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 40px;
+  z-index: 100;
+  box-shadow: 0 3px 15px rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(10px);
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.logo img {
+  height: 45px;
+  border-radius: 10px;
+}
+
+.logo h1 {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #513efa;
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 25px;
+}
+
+.nav-links a {
+  color: #fff;
+  font-weight: 500;
+  transition: 0.3s;
+  text-decoration: none;
+}
+
+.nav-links a:hover {
+  color: #00ffc8;
+}
+
+.btn-nav {
+  background: #00bfff;
+  padding: 8px 18px;
+  border-radius: 25px;
+  font-weight: 600;
+}
+
+.btn-nav:hover {
+  background: #009acd;
+}
+
+.hero {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  overflow: hidden;
+  position: relative;
+
+  /* Imagen de fondo centrada y ajustada */
+  background-image: url(image6.png);
+  background-position: center;   
+  background-size: cover;      
+
+  padding: 3px 20px;
+  margin: 20px 10px; 
+}
+
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  animation: fadeInUp 2s ease;
+}
+
+.hero-content h1 {
+  font-weight: bolder;
+  font-size: 3rem;
+  color: #c0cf37;
+  margin-bottom: 10px;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+.hero-content h2 {
+  color: rgb(0, 0, 0);
+  margin-bottom: 30px;
+  font-weight: bold;
+  text-align: center;
+  width: 50%;
+  margin: 0 auto;
+  margin-bottom: 1cm;
+}
+
+.features img {
+    border-radius: 10px;
+}
+
+.btn {
+  background: #0059ff;
+  padding: 12px 30px;
+  border-radius: 30px;
+  color: #fff;
+  font-weight: 600;
+  text-decoration: none;
+  transition: 0.3s;
+}
+
+.btn:hover {
+  background: #009acd;
+}
+
+/* === EFECTO AURORA === */
+
+
+@keyframes auroraMove {
+  0% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(-20px) scale(1.1); }
+  100% { transform: translateY(0) scale(1); }
+}
+
+/* === SECCIÓN FEATURES === */
+.features {
+  padding: 100px 40px;
+  text-align: center;
+  background: #0d1117;
+}
+
+.section-title {
+  font-size: 2.2rem;
+  color: #00bfff;
+  margin-bottom: 50px;
+}
+
+.cards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 30px;
+}
+
+.card {
+  background: #111827;
+  border-radius: 20px;
+  padding: 30px;
+  width: 280px;
+  transition: 0.4s;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+}
+
+.card:hover {
+  transform: translateY(-10px) scale(1.03);
+  background: linear-gradient(135deg, #0d1117 0%, #1b2735 100%);
+  box-shadow: 0 10px 25px rgba(0, 191, 255, 0.3);
+}
+
+a {
+    text-decoration: none;
+}
+
+.card h3 {
+  color: #00bfff;
+  margin-bottom: 15px;
+  font-size: 1.3rem;
+}
+
+.card p {
+  color: #cfcfcf;
+  font-size: 1rem;
+}
+
+/* === FOOTER === */
+footer {
+  background: #0a0d12;
+  text-align: center;
+  padding: 20px;
+  font-size: 0.9rem;
+  color: #aaa;
+  border-top: 1px solid rgba(255,255,255,0.1);
+}
+
+/* === ANIMACIONES === */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(40px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* === RESPONSIVE === */
+@media (max-width: 768px) {
+  .cards {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .hero-content h2 {
+    font-size: 2.2rem;
+  }
+
+  .navbar {
+    flex-direction: column;
+    gap: 10px;
+  }
+}
+
+.footer {
+  background: #0a192f; /* azul oscuro futurista */
+  color: #fff;
+  padding: 40px 20px;
+  text-align: center;
+  font-family: 'Poppins', sans-serif;
+}
+
+.footer-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  gap: 30px;
+  margin-bottom: 20px;
+}
+
+.footer-info h3,
+.footer-social h3 {
+  color: #00bcd4;
+  margin-bottom: 10px;
+}
+
+.footer-info p {
+  margin: 5px 0;
+  font-size: 15px;
+}
+
+.footer-bottom {
+  border-top: 1px solid #1e3a5f;
+  padding-top: 15px;
+  font-size: 14px;
+  color: #bbb;
+}
